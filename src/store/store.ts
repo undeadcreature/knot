@@ -9,10 +9,12 @@ import jobsSlice from './slices/jobsSlice';
 import mentorshipSlice from './slices/mentorshipSlice';
 import messagesSlice from './slices/messagesSlice';
 import notificationsSlice from './slices/notificationsSlice';
+import themeReducer from "./slices/themeSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
+    theme: themeReducer,
     posts: postsSlice,
     ui: uiSlice,
     search: searchSlice,
