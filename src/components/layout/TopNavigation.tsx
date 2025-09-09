@@ -2,7 +2,7 @@ import React from 'react';
 import { FiSearch, FiMessageCircle, FiBell, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { setSearchQuery, toggleSidebar } from '../../store/slices/uiSlice';
-import { toggleTheme } from '../../store/slices/authSlice';
+import { toggleTheme } from '../../store/slices/themeSlice'; 
 import clsx from 'clsx';
 
 export const TopNavigation: React.FC = () => {
