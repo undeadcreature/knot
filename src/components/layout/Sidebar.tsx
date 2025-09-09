@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FiHome, FiUsers, FiCalendar, FiUserCheck, FiBriefcase, FiTrendingUp } from 'react-icons/fi';
 import { useAppSelector } from '../../hooks';
 import clsx from 'clsx';
@@ -20,6 +21,7 @@ const sidebarItems: SidebarItem[] = [
 
 export const Sidebar: React.FC = () => {
   const { sidebarCollapsed } = useAppSelector(state => state.ui);
+  const location = useLocation();
 
   return (
     <aside className={clsx(
@@ -28,10 +30,15 @@ export const Sidebar: React.FC = () => {
     )}>
       <div className="flex-1 px-3 py-4 space-y-1">
         {sidebarItems.map((item) => (
-          <a
+          <Link
             key={item.path}
-            href={item.path}
-            className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors group"
+            to={item.path}
+            className={clsx(
+              'flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors group',
+              location.pathname === item.path
+                ? 'bg-blue-100 text-blue-700'
+                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+            )}
           >
             <item.icon size={20} className="flex-shrink-0" />
             {!sidebarCollapsed && (
@@ -44,7 +51,7 @@ export const Sidebar: React.FC = () => {
                 )}
               </>
             )}
-          </a>
+          </Link>
         ))}
       </div>
 

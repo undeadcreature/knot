@@ -1,12 +1,14 @@
 import React from 'react';
-import { FiSearch, FiMessageCircle, FiBell, FiMenu } from 'react-icons/fi';
+import { FiSearch, FiMessageCircle, FiBell, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { setSearchQuery, toggleSidebar } from '../../store/slices/uiSlice';
+import { toggleTheme } from '../../store/slices/authSlice';
 import clsx from 'clsx';
 
 export const TopNavigation: React.FC = () => {
-  const { user } = useAppSelector(state => state.auth);
+  const { user, theme } = useAppSelector(state => state.auth);
   const { searchQuery } = useAppSelector(state => state.ui);
+  const { unreadCount } = useAppSelector(state => state.notifications);
   const dispatch = useAppDispatch();
 
   return (
@@ -48,6 +50,13 @@ export const TopNavigation: React.FC = () => {
 
           {/* Right section */}
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => dispatch(toggleTheme())}
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              {theme === 'light' ? <FiMoon size={20} /> : <FiSun size={20} />}
+            </button>
+            
             <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors relative">
               <FiMessageCircle size={20} />
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
@@ -57,9 +66,11 @@ export const TopNavigation: React.FC = () => {
             
             <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors relative">
               <FiBell size={20} />
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                7
-              </span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  {unreadCount}
+                </span>
+              )}
             </button>
 
             <button className="ml-3 flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 transition-colors">
